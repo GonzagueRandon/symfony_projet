@@ -20,15 +20,27 @@ class DefaultController extends Controller
      */
     public function listAction()
     {
-        $films = $this->getDoctrine()->getRepository('CinemaBiblioBundle:film')->findAll();
-        return $this->render('CinemaBiblioBundle:film:list.html.twig');
+        $films = $this->getDoctrine()->getRepository('CinemaBiblioBundle:Film')->findAll();
+
+        $titre_de_la_page = 'films de la bibliothèques';
+
+        return $this->render(
+            'CinemaBiblioBundle:Film:list.html.twig',
+            ['films' => $films, 'titre' => $titre_de_la_page]
+        );
     }
+
 
     /**
      * @Route("/film/{id}", requirements={"id": "\d+"})
      */
     public function showAction($id)
-    {
-        return $this->render('CinemaBiblioBundle:film:show.html.twig');
-    }
+{
+    $film = $this->getDoctrine()->getRepository('CinemaBiblioBundle:Film')->find($id);
+
+    return $this->render(
+        'CinemaBiblioBundle:Film:show.html.twig',
+        ['film' => $film]
+    );
+}
 }
